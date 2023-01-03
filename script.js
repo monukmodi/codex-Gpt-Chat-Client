@@ -50,7 +50,7 @@ function generateUinqueId() {
 // ChatStripe
 //  for AI and User
 
-function ChatStripe(isAi, value, uniqueId) {
+function chatStripe(isAi, value, uniqueId) {
   return `
       <div class="wrapper ${isAi && 'ai'}">
         <div class="chat">
@@ -62,3 +62,34 @@ function ChatStripe(isAi, value, uniqueId) {
       </div>
     `
 }
+
+// AI generated Response on Submit
+
+const handleSubmit = async (e) => {
+  e.preventDefault()
+
+  const data = new FormData(form)
+
+  // User's chatStripe
+
+  chatContainer.innerHTML += chatStripe(false, data.get('prompt')) // we are passing false because because it is for user profile
+
+  form.reset()
+
+  // Bot's chatStripe
+  const uniqueId = generateUinqueId()
+  chatContainer.innerHTML += chatStripe(true, ' ', uniqueId) // we are passing true because because it is for AI profile
+
+  chatContainer.scrollTop = chatContainer.scrollHeight
+
+  const messageDiv = document.getElementById(uniqueId)
+
+  loader(messageDiv)
+}
+
+form.addEventListener('submit', handleSubmit)
+form.addEventListener('keyup', (e) => {
+  if (e.keyCode === 13) {
+    handleSubmit(e)
+  }
+})
