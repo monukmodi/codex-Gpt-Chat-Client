@@ -36,3 +36,13 @@ function typeText(element, text) {
     }
   }, 20)
 }
+
+// Unique Id for every single message to be able to map over them
+
+function generateUinqueId() {
+  const timestamp = Date.now()
+  const randomNumber = Math.random()
+  const hexadecimalString = randomNumber.toString(16)
+
+  return `id-${timestamp}-${hexadecimalString}`
+}
